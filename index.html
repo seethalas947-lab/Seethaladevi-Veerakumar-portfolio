@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V. Seethaladevi — HR Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --cream: #F5F0E8; --dark: #1A1A1A; --teal: #1D6E5A;
+    --teal-light: #2D9B7F; --teal-pale: #E8F4F0;
+    --gold: #C4963A; --mid: #6B6B6B; --border: #DDD8CF;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: rgba(245,240,232,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--dark); letter-spacing: 0.02em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 0.8rem; font-weight: 500; color: var(--mid); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 80px; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(29,110,90,0.06) 0%, transparent 60%); }
+  .hero-left { padding: 5rem 3rem 5rem 4rem; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.5rem; }
+  .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--teal); }
+  .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 300; line-height: 1.1; color: var(--dark); margin-bottom: 0.5rem; }
+  .hero-name em { font-style: italic; color: var(--teal); }
+  .hero-role { font-size: 0.9rem; font-weight: 400; color: var(--mid); margin-bottom: 2rem; line-height: 1.6; max-width: 420px; }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2.5rem; }
+  .pill { font-size: 0.72rem; font-weight: 500; padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); color: var(--mid); background: white; letter-spacing: 0.04em; }
+  .pill.active { background: var(--teal); color: white; border-color: var(--teal); }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary { padding: 12px 28px; background: var(--teal); color: white; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.2s; display: inline-block; }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
+  .btn-outline { padding: 12px 28px; background: transparent; color: var(--dark); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--dark); border-radius: 4px; cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-block; }
+  .btn-outline:hover { background: var(--dark); color: white; }
+  .hero-right { display: flex; align-items: center; justify-content: center; padding: 4rem 4rem 4rem 2rem; position: relative; z-index: 2; }
+  .hero-card { background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 8px 40px rgba(0,0,0,0.08); width: 100%; max-width: 360px; border: 1px solid var(--border); }
+  .hero-card-top { display: flex; align-items: center; gap: 16px; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  .avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: white; flex-shrink: 0; }
+  .avatar-info h3 { font-size: 0.95rem; font-weight: 500; color: var(--dark); }
+  .avatar-info p { font-size: 0.75rem; color: var(--mid); margin-top: 2px; }
+  .otw-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.68rem; font-weight: 500; color: #1D6E5A; background: var(--teal-pale); border-radius: 20px; padding: 4px 10px; margin-top: 6px; }
+  .otw-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.2)} }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.2rem; }
+  .stat { background: var(--teal-pale); border-radius: 8px; padding: 12px; text-align: center; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--teal); }
+  .stat-label { font-size: 0.65rem; color: var(--mid); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .pub-badge { background: linear-gradient(135deg, #FBF3E4, #F5E8CC); border: 1px solid #E8D5A3; border-radius: 8px; padding: 12px; display: flex; align-items: center; gap: 10px; }
+  .pub-icon { font-size: 1.4rem; }
+  .pub-text { font-size: 0.72rem; color: var(--dark); line-height: 1.5; }
+  .pub-text strong { font-weight: 500; color: var(--gold); }
+
+  /* SECTIONS */
+  section { padding: 5rem 4rem; }
+  .section-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 60px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 300; color: var(--dark); margin-bottom: 3rem; line-height: 1.2; }
+
+  /* ABOUT */
+  .about-section { background: white; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text { font-size: 0.95rem; color: var(--mid); line-height: 1.9; }
+  .about-text p { margin-bottom: 1rem; }
+  .about-highlights { display: flex; flex-direction: column; gap: 16px; }
+  .highlight-item { display: flex; gap: 14px; align-items: flex-start; padding: 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--cream); transition: border-color 0.2s, transform 0.2s; }
+  .highlight-item:hover { border-color: var(--teal); transform: translateX(4px); }
+  .h-icon { font-size: 1.3rem; margin-top: 2px; flex-shrink: 0; }
+  .h-title { font-size: 0.85rem; font-weight: 500; color: var(--dark); margin-bottom: 3px; }
+  .h-desc { font-size: 0.78rem; color: var(--mid); line-height: 1.6; }
+
+  /* EXPERIENCE */
+  .exp-section { background: var(--cream); }
+  .timeline { position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 1px; background: var(--border); }
+  .exp-item { display: flex; gap: 2rem; margin-bottom: 2.5rem; position: relative; }
+  .exp-dot { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1rem; border: 2px solid var(--border); background: white; position: relative; z-index: 1; }
+  .exp-dot.featured { background: var(--teal); border-color: var(--teal); }
+  .exp-body { background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border); flex: 1; transition: box-shadow 0.2s, transform 0.2s; }
+  .exp-body:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+  .exp-title { font-size: 0.95rem; font-weight: 500; color: var(--dark); }
+  .exp-company { font-size: 0.78rem; color: var(--teal); font-weight: 500; margin-bottom: 4px; }
+  .exp-date { font-size: 0.72rem; color: var(--mid); background: var(--teal-pale); padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .exp-points { list-style: none; margin-top: 10px; }
+  .exp-points li { font-size: 0.8rem; color: var(--mid); line-height: 1.7; padding: 3px 0 3px 16px; position: relative; }
+  .exp-points li::before { content: '→'; position: absolute; left: 0; color: var(--teal); font-size: 0.75rem; }
+
+  /* SKILLS */
+  .skills-section { background: white; }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .skill-group { background: var(--cream); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border); }
+  .skill-group-title { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag { font-size: 0.72rem; padding: 4px 12px; border-radius: 20px; background: white; border: 1px solid var(--border); color: var(--dark); }
+
+  /* PUBLICATION */
+  .pub-section { background: var(--dark); }
+  .pub-section .section-label { color: var(--teal-light); }
+  .pub-section .section-title { color: white; }
+  .pub-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; }
+  .pub-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .pub-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; color: white; line-height: 1.3; margin-bottom: 1rem; }
+  .pub-meta { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; }
+  .pub-points { list-style: none; }
+  .pub-points li { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.8; padding: 2px 0 2px 16px; position: relative; }
+  .pub-points li::before { content: '→'; position: absolute; left: 0; color: var(--teal-light); }
+  .pub-right { text-align: center; }
+  .pub-page { font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 300; color: var(--gold); line-height: 1; }
+  .pub-page-label { font-size: 0.68rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+  .pub-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 1.5rem; padding: 10px 20px; background: var(--teal); color: white; border-radius: 6px; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
+  .pub-link:hover { background: var(--teal-light); }
+
+  /* PROJECT */
+  .project-section { background: var(--cream); }
+  .project-card { background: white; border-radius: 16px; padding: 2.5rem; border: 1px solid var(--border); }
+  .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+  .project-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--dark); line-height: 1.3; max-width: 600px; }
+  .project-date { font-size: 0.72rem; color: var(--mid); background: var(--teal-pale); padding: 4px 12px; border-radius: 20px; white-space: nowrap; color: var(--teal); font-weight: 500; }
+  .project-org { font-size: 0.78rem; color: var(--teal); font-weight: 500; margin-bottom: 1.2rem; }
+  .project-points { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .project-points li { font-size: 0.8rem; color: var(--mid); line-height: 1.7; padding: 8px 10px 8px 20px; position: relative; background: var(--cream); border-radius: 6px; }
+  .project-points li::before { content: '→'; position: absolute; left: 8px; color: var(--teal); }
+  .project-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 1.5rem; padding: 10px 20px; background: var(--teal-pale); color: var(--teal); border-radius: 6px; font-size: 0.75rem; font-weight: 500; text-decoration: none; border: 1px solid var(--teal); transition: all 0.2s; }
+  .project-link:hover { background: var(--teal); color: white; }
+
+  /* CERTIFICATIONS */
+  .cert-section { background: white; }
+  .cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .cert-card { background: var(--cream); border-radius: 10px; padding: 1.2rem; border: 1px solid var(--border); transition: border-color 0.2s, transform 0.2s; }
+  .cert-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+  .cert-card.top { border-top: 3px solid var(--teal); background: white; }
+  .cert-org { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+  .cert-name { font-size: 0.82rem; font-weight: 500; color: var(--dark); line-height: 1.4; margin-bottom: 6px; }
+  .cert-year { font-size: 0.7rem; color: var(--mid); }
+
+  /* EDUCATION */
+  .edu-section { background: var(--cream); }
+  .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .edu-card { background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border); transition: transform 0.2s, border-color 0.2s; }
+  .edu-card:hover { transform: translateY(-3px); border-color: var(--teal); }
+  .edu-degree { font-size: 0.82rem; font-weight: 500; color: var(--dark); margin-bottom: 6px; line-height: 1.4; }
+  .edu-school { font-size: 0.75rem; color: var(--teal); font-weight: 500; margin-bottom: 4px; }
+  .edu-year { font-size: 0.7rem; color: var(--mid); margin-bottom: 8px; }
+  .edu-grade { display: inline-block; font-size: 0.68rem; font-weight: 500; padding: 2px 10px; border-radius: 20px; background: var(--teal-pale); color: var(--teal); }
+
+  /* CONTACT */
+  .contact-section { background: white; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .contact-text { font-size: 0.95rem; color: var(--mid); line-height: 1.9; }
+  .contact-items { display: flex; flex-direction: column; gap: 14px; }
+  .contact-item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--cream); transition: border-color 0.2s; }
+  .contact-item:hover { border-color: var(--teal); }
+  .c-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--teal-pale); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .c-label { font-size: 0.68rem; color: var(--mid); text-transform: uppercase; letter-spacing: 0.08em; }
+  .c-value { font-size: 0.82rem; font-weight: 500; color: var(--dark); margin-top: 1px; }
+
+  /* FOOTER */
+  footer { background: var(--dark); color: rgba(255,255,255,0.4); text-align: center; padding: 2rem; font-size: 0.75rem; letter-spacing: 0.06em; }
+  footer span { color: var(--teal-light); }
+
+  /* ANIMATIONS */
+  .fade-in { opacity: 0; transform: translateY(20px); animation: fadeUp 0.6s ease forwards; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 3rem 1.5rem; }
+    section { padding: 3rem 1.5rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .skills-grid, .cert-grid, .edu-grid { grid-template-columns: repeat(2, 1fr); }
+    .pub-card { grid-template-columns: 1fr; }
+    .pub-right { display: none; }
+    .project-points { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">V. Seethaladevi</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#publication">Research</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-left">
+    <div class="hero-tag fade-in">HR Professional & Published Researcher</div>
+    <h1 class="hero-name fade-in delay-1">V. <em>Seethaladevi</em><br>Veerakumar</h1>
+    <p class="hero-role fade-in delay-2">MBA in Human Resource Management · Interned at Larsen & Toubro & Catchu Healthcare · Data-Analytics mindset applied to HR</p>
+    <div class="hero-pills fade-in delay-3">
+      <span class="pill active">Open to Work</span>
+      <span class="pill">HR Operations</span>
+      <span class="pill">Talent Acquisition</span>
+      <span class="pill">HR Analytics</span>
+      <span class="pill">Tamil Nadu · Remote</span>
+    </div>
+    <div class="hero-btns fade-in delay-4">
+      <a href="#contact" class="btn-primary">Get in Touch</a>
+      <a href="https://www.scribd.com/document/894430658/Artificial-Intelligence" target="_blank" class="btn-outline">View Publication</a>
+    </div>
+  </div>
+  <div class="hero-right fade-in delay-2">
+    <div class="hero-card">
+      <div class="hero-card-top">
+        <div class="avatar">S</div>
+        <div class="avatar-info">
+          <h3>V. Seethaladevi</h3>
+          <p>HR Graduate · Thiruvarur, TN</p>
+          <div class="otw-badge"><div class="otw-dot"></div> Open to Work</div>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">Internships</div></div>
+        <div class="stat"><div class="stat-num">1</div><div class="stat-label">Publication</div></div>
+        <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Certifications</div></div>
+        <div class="stat"><div class="stat-num">A+</div><div class="stat-label">BBA Grade</div></div>
+      </div>
+      <div class="pub-badge">
+        <div class="pub-icon">📄</div>
+        <div class="pub-text"><strong>Published Researcher</strong><br>Role of AI in Employee Productivity · Nooleni Publications · 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-label">About Me</div>
+  <h2 class="section-title">I didn't just study HR —<br>I practised it.</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>While most freshers were reading about recruitment, I was running it. At Catchu Healthcare, I worked hands-on with talent acquisition, employee onboarding, performance tracking, and HR process optimization.</p>
+      <p>At Larsen & Toubro, I went deeper — researching how AI-driven and hybrid work cultures are reshaping employee engagement. This gave me a real understanding of where HR is heading, not just where it's been.</p>
+      <p>What makes me different: I bring a data analytics mindset into HR. Power BI, GenAI Analytics, Business Intelligence — I can work with HR metrics, read dashboards, and support data-driven people decisions.</p>
+      <p>Published Researcher — Role of AI in Improving Employee Productivity, Nooleni Publications, July 2025 · Page 572</p>
+    </div>
+    <div class="about-highlights">
+      <div class="highlight-item">
+        <div class="h-icon">🏢</div>
+        <div><div class="h-title">Real Corporate Experience</div><div class="h-desc">Interned at Larsen & Toubro and Catchu Healthcare — hands-on HR work before first full-time role</div></div>
+      </div>
+      <div class="highlight-item">
+        <div class="h-icon">📊</div>
+        <div><div class="h-title">Data-Aware HR Professional</div><div class="h-desc">Power BI, GenAI Analytics, Data Visualization — rare combination at entry level</div></div>
+      </div>
+      <div class="highlight-item">
+        <div class="h-icon">🔬</div>
+        <div><div class="h-title">Published Researcher</div><div class="h-desc">Academic paper on AI & Employee Productivity published in Nooleni Publications, 2025</div></div>
+      </div>
+      <div class="highlight-item">
+        <div class="h-icon">🎓</div>
+        <div><div class="h-title">Strong Academic Foundation</div><div class="h-desc">MBA in HR + BBA with A+ Grade + PGDCA — theory backed by practice</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="exp-section" id="experience">
+  <div class="section-label">Experience</div>
+  <h2 class="section-title">Where I've worked<br>& what I built</h2>
+  <div class="timeline">
+    <div class="exp-item">
+      <div class="exp-dot featured">💻</div>
+      <div class="exp-body">
+        <div class="exp-header">
+          <div><div class="exp-title">Data Visualization Intern</div><div class="exp-company">Infosys Springboard</div></div>
+          <div class="exp-date">Apr 2026 – Present · Remote</div>
+        </div>
+        <ul class="exp-points">
+          <li>Completing Virtual Internship 7.0 in Data Visualization — Microsoft Power BI & Excel</li>
+          <li>Building interactive dashboards and visual reports from real-world datasets</li>
+          <li>Applying Business Intelligence concepts to translate raw data into leadership insights</li>
+          <li>Strengthening HR people analytics and workforce reporting capabilities</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot featured">🔬</div>
+      <div class="exp-body">
+        <div class="exp-header">
+          <div><div class="exp-title">HR Research Intern</div><div class="exp-company">Larsen & Toubro</div></div>
+          <div class="exp-date">Dec 2025 – Mar 2026 · Remote</div>
+        </div>
+        <ul class="exp-points">
+          <li>Researched employee engagement strategies in AI-driven and hybrid work environments</li>
+          <li>Analysed how L&T adapts HR practices for hybrid workforces using GenAI tools</li>
+          <li>Studied impact of hybrid models on employee motivation, collaboration and work-life balance</li>
+          <li>Compiled structured research report with actionable HR recommendations for leadership</li>
+          <li>Developed expertise in digital transformation, people analytics and flexible work models</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot">🏥</div>
+      <div class="exp-body">
+        <div class="exp-header">
+          <div><div class="exp-title">HR Intern</div><div class="exp-company">Catchu Healthcare & IT Solutions</div></div>
+          <div class="exp-date">Dec 2024 – Jan 2025 · On-site</div>
+        </div>
+        <ul class="exp-points">
+          <li>Conducted recruitment drives and screened candidates for healthcare and IT roles</li>
+          <li>Managed end-to-end employee onboarding — documentation, induction and record maintenance</li>
+          <li>Tracked employee performance data and generated HR reports for management review</li>
+          <li>Supported HR process optimization to improve operational efficiency across departments</li>
+          <li>Maintained accurate employee records in HRMS ensuring compliance with HR policies</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="section-label">Skills</div>
+  <h2 class="section-title">What I bring<br>to the table</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">HR Core Skills</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Talent Acquisition</span>
+        <span class="skill-tag">Employee Onboarding</span>
+        <span class="skill-tag">HR Operations</span>
+        <span class="skill-tag">Employee Engagement</span>
+        <span class="skill-tag">Performance Management</span>
+        <span class="skill-tag">Labour Law</span>
+        <span class="skill-tag">HRMS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Data & Analytics</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Microsoft Power BI</span>
+        <span class="skill-tag">HR Analytics</span>
+        <span class="skill-tag">Data Visualization</span>
+        <span class="skill-tag">Business Intelligence</span>
+        <span class="skill-tag">GenAI Analytics</span>
+        <span class="skill-tag">Data Modeling</span>
+        <span class="skill-tag">MS Excel</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Professional Skills</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Research & Analysis</span>
+        <span class="skill-tag">Business Communication</span>
+        <span class="skill-tag">Employer Branding</span>
+        <span class="skill-tag">People Analytics</span>
+        <span class="skill-tag">Time Management</span>
+        <span class="skill-tag">Tally ERP</span>
+        <span class="skill-tag">Python Basics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATION -->
+<section class="pub-section" id="publication">
+  <div class="section-label">Research & Publication</div>
+  <h2 class="section-title">Published Academic Work</h2>
+  <div class="pub-card">
+    <div>
+      <div class="pub-label">Nooleni Publications · July 30, 2025</div>
+      <div class="pub-title">Role of AI in Improving Employee Productivity in Supply Chain Companies</div>
+      <div class="pub-meta">Author: V. Seethaladevi · Page 572</div>
+      <ul class="pub-points">
+        <li>Examined impact of AI on employee productivity within supply chain organisations</li>
+        <li>Explored AI-driven tools optimising workflows, automation and decision-making</li>
+        <li>Analysed workforce management, performance enhancement and operational excellence</li>
+        <li>Provided evidence-based HR recommendations for AI-enabled organisations</li>
+        <li>Contributes to growing knowledge on AI adoption in HR and operations management</li>
+      </ul>
+      <a href="https://www.scribd.com/document/894430658/Artificial-Intelligence" target="_blank" class="pub-link">Read Full Publication →</a>
+    </div>
+    <div class="pub-right">
+      <div class="pub-page">572</div>
+      <div class="pub-page-label">Page Number</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT -->
+<section class="project-section" id="project">
+  <div class="section-label">Research Project</div>
+  <h2 class="section-title">MBA Research at<br>Larsen & Toubro</h2>
+  <div class="project-card">
+    <div class="project-header">
+      <div class="project-title">A Study on Employee Engagement Strategies in AI-Driven and Hybrid Work Culture — Special Reference to Larsen & Toubro</div>
+      <div class="project-date">Dec 2025 – Mar 2026</div>
+    </div>
+    <div class="project-org">Associated with Larsen & Toubro · Rabiammal Ahamed Maideen College for Women</div>
+    <ul class="project-points">
+      <li>Conducted primary research through structured surveys and quantitative data analysis</li>
+      <li>Examined AI-powered HR tools transforming employee engagement and performance management</li>
+      <li>Analysed impact of hybrid work on motivation, collaboration and work-life balance at L&T</li>
+      <li>Identified effective engagement strategies in digital and flexible work environments</li>
+      <li>Recommended actionable HR practices for AI-enabled and hybrid workplaces</li>
+      <li>Developed research, data collection and analytical skills through MBA project work</li>
+    </ul>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfpi45cRg0jQ-rFvpaQEQecqzGluL88ffBve5-3UDEb1R0rHg/viewform" target="_blank" class="project-link">View Research Survey →</a>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="cert-section" id="certifications">
+  <div class="section-label">Certifications</div>
+  <h2 class="section-title">Continuous learning,<br>verified credentials</h2>
+  <div class="cert-grid">
+    <div class="cert-card top"><div class="cert-org">Forage · Tata</div><div class="cert-name">GenAI Powered Data Analytics Job Simulation</div><div class="cert-year">Aug 2025</div></div>
+    <div class="cert-card top"><div class="cert-org">Simplilearn</div><div class="cert-name">Data Analytics</div><div class="cert-year">Oct 2025</div></div>
+    <div class="cert-card top"><div class="cert-org">Mahindra Pride Classroom</div><div class="cert-name">Employability Skill Program</div><div class="cert-year">2025</div></div>
+    <div class="cert-card"><div class="cert-org">Infosys Springboard</div><div class="cert-name">Introduction to Business Intelligence</div><div class="cert-year">Apr 2026</div></div>
+    <div class="cert-card"><div class="cert-org">Infosys Springboard</div><div class="cert-name">Multidimensional Data Modeling</div><div class="cert-year">Apr 2026</div></div>
+    <div class="cert-card"><div class="cert-org">NPTEL</div><div class="cert-name">Brand Management</div><div class="cert-year">Sep 2025</div></div>
+    <div class="cert-card"><div class="cert-org">VEDHA</div><div class="cert-name">Post Graduate Diploma in Computer Applications</div><div class="cert-year">Mar 2025</div></div>
+    <div class="cert-card"><div class="cert-org">Infosys Springboard</div><div class="cert-name">Time Management</div><div class="cert-year">Jun 2025</div></div>
+    <div class="cert-card"><div class="cert-org">Infosys Springboard</div><div class="cert-name">Email Writing & Communication</div><div class="cert-year">Jun 2025</div></div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="edu-section" id="education">
+  <div class="section-label">Education</div>
+  <h2 class="section-title">Academic<br>Foundation</h2>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-degree">Master of Business Administration — Human Resource Management</div>
+      <div class="edu-school">Rabiammal Ahamed Maideen College for Women, Thiruvarur</div>
+      <div class="edu-year">2024 – Present</div>
+      <span class="edu-grade">Specialisation: HR Management</span>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Bachelor of Business Administration — Business Administration & Management</div>
+      <div class="edu-school">Rabiammal Ahamed Maideen College for Women, Thiruvarur</div>
+      <div class="edu-year">Jun 2021 – Nov 2024</div>
+      <span class="edu-grade">Grade: A+</span>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Post Graduate Diploma in Computer Applications (PGDCA)</div>
+      <div class="edu-school">VEDHA The Way of Accountants</div>
+      <div class="edu-year">Mar 2025 – Aug 2025</div>
+      <span class="edu-grade">Government Recognised</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-label">Get in Touch</div>
+  <h2 class="section-title">Open to HR opportunities<br>across Tamil Nadu & Remote</h2>
+  <div class="contact-grid">
+    <div class="contact-text">
+      <p>I am actively looking for my first full-time HR role in HR Operations, Talent Acquisition, or HR Analytics — where I can contribute from day one and grow fast.</p>
+      <br>
+      <p>If you are a recruiter or hiring manager open to a conversation, I would love to connect. Let's talk about how I can add value to your team.</p>
+      <br>
+      <div class="hero-pills" style="margin-top:1rem;">
+        <span class="pill active">Available Immediately</span>
+        <span class="pill">On-site · Hybrid · Remote</span>
+        <span class="pill">Chennai · Coimbatore · TN</span>
+      </div>
+    </div>
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="c-icon">💼</div>
+        <div><div class="c-label">LinkedIn</div><div class="c-value">linkedin.com/in/seethaladevi-veerakumar-ba103938a</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="c-icon">📍</div>
+        <div><div class="c-label">Location</div><div class="c-value">Thiruvarur, Tamil Nadu, India</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="c-icon">🎯</div>
+        <div><div class="c-label">Target Roles</div><div class="c-value">HR Executive · HR Analyst · Talent Acquisition · HR Operations</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="c-icon">📄</div>
+        <div><div class="c-label">Publication</div><div class="c-value">Nooleni Publications · July 2025 · Page 572</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built with purpose · <span>V. Seethaladevi Veerakumar</span> · HR Professional & Published Researcher · Tamil Nadu, India
+</footer>
+
+</body>
+</html>
